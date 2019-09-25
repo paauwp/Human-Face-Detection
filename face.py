@@ -2,7 +2,7 @@ import cv2
 
 #loading the test image
 #The function imread() loads an image from the specified file and returns it as a numpy N-dimensional array
-image = cv2.imread("kids.jpg")
+image = cv2.imread("test.jpg")
 
 #Before we detect faces in the image, we will first need to convert the image to grayscale, 
 #that is because the function we gonna use to detect faces expects a grayscale image:
@@ -17,17 +17,18 @@ image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 #Let's put it in a folder called "cascades" ( or whatever ) and then load it:
 
 # initialize the face recognizer (default face haar cascade)
-face_cascade = cv2.CascadeClassifier("haarcascade_fullbody.xml")
+# face_cascade = cv2.CascadeClassifier("haarcascade_fullbody.xml")
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 # detect all the faces in the image
-faces = face_cascade.detectMultiScale(image_gray)
+faces = face_cascade.detectMultiScale(image_gray, 1.3, 5)
 
 # print the number of faces detected
 print(f"{len(faces)} faces detected in the image.")
 
 # for every face, draw a blue rectangle
 for x, y, width, height in faces:
-    cv2.rectangle(image, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=2)
+    cv2.rectangle(image, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=4)
 
 # save the image with rectangles
-cv2.imwrite("kids_detected.jpg", image) 
+cv2.imwrite("test_detected.jpg", image) 
